@@ -4,6 +4,7 @@ import 'package:trainning/animations/hero_animation.dart';
 import 'package:trainning/animations/implicit_animations.dart';
 import 'package:trainning/animations/transform.dart';
 import 'package:trainning/animations/animation_controller.dart';
+import 'package:trainning/animations/transition_example.dart';
 import 'package:trainning/utils/base_scaffold.dart';
 import 'package:trainning/utils/extentsions.dart';
 
@@ -57,6 +58,13 @@ class AnimationsPage extends StatelessWidget {
               title: const Text('Animation using controller'),
               subtitle: const Text(
                   "Animation Controller tạo ra các giá trị từ 0.0 đến 1.0 trong khoảng thời gian nhất định. Controller tạo ra một giá trị mới bất cứ khi nào device render 1 frame mới.\nAnimationController cần khai báo ở initState và giải phóng ở dispose để tránh việc tràn bộ nhớ"),
+            ),
+            const Divider(),
+            ListTile(
+              onTap: () => context.push(const TransitionExample()),
+              title: const Text('Transition'),
+              subtitle: const Text(
+                  "Là một bộ widget có sẵn của Flutter giúp tạo ra các animation nhanh chóng, các widget này thường có format dạng xxxTransition.\nKết hợp giữa AnimationController và Tween"),
             ),
             const Divider(),
           ],
