@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trainning/animations/curves_example.dart';
 import 'package:trainning/animations/hero_animation.dart';
 import 'package:trainning/animations/implicit_animations.dart';
+import 'package:trainning/animations/lottie_example.dart';
 import 'package:trainning/animations/transform.dart';
 import 'package:trainning/animations/animation_controller.dart';
 import 'package:trainning/animations/transition_example.dart';
@@ -65,6 +66,20 @@ class AnimationsPage extends StatelessWidget {
               title: const Text('Transition'),
               subtitle: const Text(
                   "Là một bộ widget có sẵn của Flutter giúp tạo ra các animation nhanh chóng, các widget này thường có format dạng xxxTransition.\nKết hợp giữa AnimationController và Tween"),
+            ),
+            const Divider(),
+            ListTile(
+              onTap: () => context.push(const LottieExample()),
+              title: const Text('Lottie'),
+              subtitle: const Text(
+                  "Tạo animation từ package Lottie. Là package hỗ trợ hiển thị các animation được tạo từ Adobe After Effect. Trang web share files https://lottiefiles.com/"),
+            ),
+            const Divider(),
+            ListTile(
+              onTap: () => context.push(const TransitionExample()),
+              title: const Text('Rive'),
+              subtitle: const Text(
+                  "Tạo animation từ package Rive. Hiển thị các animation được tạo bằng Rive"),
             ),
             const Divider(),
           ],
