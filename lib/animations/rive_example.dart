@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:rive/rive.dart';
+import 'package:trainning/share_widgets/custom_button.dart';
 import 'package:trainning/utils/base_scaffold.dart';
+import 'package:trainning/utils/extentsions.dart';
 
 class RiveExample extends StatefulWidget {
   const RiveExample({Key? key}) : super(key: key);
@@ -9,27 +13,16 @@ class RiveExample extends StatefulWidget {
 }
 
 class _State extends State<RiveExample> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: const Duration(seconds: 2),
-    vsync: this,
-  )..repeat(reverse: true);
-  late final Animation<Offset> _offsetAnimation = Tween<Offset>(
-    begin: Offset.zero,
-    end: const Offset(0.5, 0.5),
-  ).animate(CurvedAnimation(
-    parent: _controller,
-    curve: Curves.elasticIn,
-  ));
+  SMITrigger? _bump;
 
-  late final Animation<double> _doubleAnimation = CurvedAnimation(
-    parent: _controller,
-    curve: Curves.easeIn,
-  );
+  bool get isPlaying => _controller?.isActive ?? false;
+  StateMachineController? _controller;
+  SMIInput<bool>? _anim1;
+  SMIInput<bool>? _anim2;
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -38,37 +31,77 @@ class _State extends State<RiveExample> with SingleTickerProviderStateMixin {
       body: Column(
         children: [
           const SizedBox(
-            width: double.infinity,
-          ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            color: Colors.green,
-            child: SlideTransition(
-              position: _offsetAnimation,
-              child: const FlutterLogo(size: 150.0),
+            height: 200,
+            child: RiveAnimation.asset(
+              "assets/rives/842-1644-snowday.riv",
+              fit: BoxFit.fitHeight,
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            color: Colors.blueGrey,
-            child: SizeTransition(
-              sizeFactor: _doubleAnimation,
-              axis: Axis.horizontal,
-              axisAlignment: -1,
-              child: const FlutterLogo(size: 150.0),
+          SizedBox(
+            height: 200,
+            child: GestureDetector(
+              child: RiveAnimation.network(
+                'https://cdn.rive.app/animations/vehicles.riv',
+                fit: BoxFit.cover,
+                onInit: _onRiveInit,
+              ),
+              onTap: _hitBump,
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            color: const Color.fromARGB(255, 204, 72, 219),
-            child: FadeTransition(
-              opacity: _doubleAnimation,
-              child: const FlutterLogo(size: 150.0),
+          FutureBuilder<Artboard>(
+            future: loadData(),
+            builder: (context, artboard) => MouseRegion(
+              onEnter: (_) => _anim1?.value = true,
+              onExit: (_) => _anim1?.value = false,
+              child: SizedBox(
+                height: 250,
+                child: artboard.data != null
+                    ? Rive(artboard: artboard.data!)
+                    : const CircularProgressIndicator(),
+              ),
             ),
           ),
+          16.height,
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              CustomButton(
+                  label: 'Anim 1',
+                  onTap: () {
+                    _anim1!.value = !_anim1!.value;
+                  }),
+              CustomButton(
+                  label: 'Anim 2',
+                  onTap: () {
+                    _anim2!.value = !_anim2!.value;
+                  })
+            ],
+          )
         ],
       ),
       title: 'Rives',
     );
+  }
+
+  void _onRiveInit(Artboard artboard) {
+    final controller = StateMachineController.fromArtboard(artboard, 'bumpy');
+    artboard.addController(controller!);
+    _bump = controller.findInput<bool>('bump') as SMITrigger;
+  }
+
+  void _hitBump() => _bump?.fire();
+
+  Future<Artboard> loadData() async {
+    final data = await rootBundle.load('assets/rives/rocket.riv');
+    final file = RiveFile.import(data);
+    final artboard = file.mainArtboard;
+    var controller = StateMachineController.fromArtboard(artboard, 'Button');
+    if (controller != null) {
+      artboard.addController(controller);
+      _anim1 = controller.findInput('Hover');
+      _anim2 = controller.findInput('Press');
+    }
+    return artboard;
   }
 }

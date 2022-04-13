@@ -3,6 +3,7 @@ import 'package:trainning/animations/curves_example.dart';
 import 'package:trainning/animations/hero_animation.dart';
 import 'package:trainning/animations/implicit_animations.dart';
 import 'package:trainning/animations/lottie_example.dart';
+import 'package:trainning/animations/rive_example.dart';
 import 'package:trainning/animations/transform.dart';
 import 'package:trainning/animations/animation_controller.dart';
 import 'package:trainning/animations/transition_example.dart';
@@ -76,7 +77,7 @@ class AnimationsPage extends StatelessWidget {
             ),
             const Divider(),
             ListTile(
-              onTap: () => context.push(const TransitionExample()),
+              onTap: () => context.push(const RiveExample()),
               title: const Text('Rive'),
               subtitle: const Text(
                   "Tạo animation từ package Rive. Hiển thị các animation được tạo bằng Rive"),
