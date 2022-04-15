@@ -53,11 +53,6 @@ class _TransformExampleState extends State<TransformExample> {
                     onPanCancel: () => setState(() => _translate = Offset.zero),
                     child: const FlutterLogo(size: 150)),
               ),
-              CustomButton(
-                  label: "roate",
-                  onTap: () => setState(
-                        () => angle = MathUtil.randomDouble(2 * pi),
-                      )),
               8.height,
               const Divider(),
               const Text("Scaling in x or y direction"),

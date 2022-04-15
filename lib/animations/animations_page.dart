@@ -48,12 +48,12 @@ class AnimationsPage extends StatelessWidget {
               subtitle: const Text(
                   "Là một widget giúp thay đổi cách render widget con"),
             ),
-            const Divider(),
-            ListTile(
-              onTap: () => context.push(const TimerAnimationExample()),
-              title: const Text('Animation using Timer'),
-              subtitle: const Text("Tạo animation bằng Timer"),
-            ),
+            // const Divider(),
+            // ListTile(
+            //   onTap: () => context.push(const TimerAnimationExample()),
+            //   title: const Text('Animation using Timer'),
+            //   subtitle: const Text("Tạo animation bằng Timer"),
+            // ),
             const Divider(),
             ListTile(
               onTap: () => context.push(const AnimationControllerExample()),

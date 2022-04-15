@@ -14,6 +14,7 @@ class _State extends State<TransitionExample>
     duration: const Duration(seconds: 2),
     vsync: this,
   )..repeat(reverse: true);
+  
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
     begin: Offset.zero,
     end: const Offset(0.5, 0.5),

@@ -19,6 +19,7 @@ class _ImplicitAnimationsExampleState extends State<ImplicitAnimationsExample> {
   var _height = 140.0;
   var _opacity = 1.0;
   var _angle = 0.0;
+  var _counter = 0;
   final _animationDuration = const Duration(milliseconds: 500);
   late Color _color;
   late double _borderRadius;
@@ -94,82 +95,114 @@ class _ImplicitAnimationsExampleState extends State<ImplicitAnimationsExample> {
                 Text("Opacity: ${_opacity.toStringAsFixed(3)}"),
               ],
             ),
+            const Divider(),
+            AnimatedSwitcher(
+              duration: _animationDuration,
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return ScaleTransition(scale: animation, child: child);
+              },
+              child: Text(
+                "$_counter",
+                key: ValueKey<int>(_counter),
+                style: const TextStyle(fontSize: 35, color: Colors.blue),
+              ),
+            ),
+            Center(
+              child: AnimatedCrossFade(
+                duration: _animationDuration,
+                firstChild: const FlutterLogo(
+                    style: FlutterLogoStyle.horizontal, size: 100.0),
+                secondChild: const FlutterLogo(
+                    style: FlutterLogoStyle.stacked, size: 100.0),
+                crossFadeState: _counter.isEven
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Wrap(
-                spacing: 12,
-                runSpacing: 12,
-                // crossAxisAlignment: WrapCrossAlignment.center,
-                alignment: WrapAlignment.center,
-                children: [
-                  CustomButton(
-                    onTap: () {
-                      setState(() {
-                        _color = _randomColor();
-                      });
-                    },
-                    label: 'Color',
-                  ),
-                  CustomButton(
-                    onTap: () {
-                      setState(() {
-                        _borderRadius = MathUtil.randomDouble();
-                      });
-                    },
-                    label: 'Border',
-                  ),
-                  CustomButton(
-                    onTap: () {
-                      setState(() {
-                        _margin = MathUtil.randomDouble();
-                      });
-                    },
-                    label: 'Margin',
-                  ),
-                  CustomButton(
-                    onTap: () {
-                      setState(() {
-                        _width = MathUtil.randomDouble(200);
-                        _height = MathUtil.randomDouble(300);
-                      });
-                    },
-                    label: 'Size',
-                  ),
-                  CustomButton(
-                    onTap: () {
-                      setState(() {
-                        _angle = MathUtil.randomDouble(360).toRadians;
-                      });
-                    },
-                    label: ' Rotate',
-                  ),
-                  CustomButton(
-                    onTap: () {
-                      setState(() {
-                        _opacity = MathUtil.randomDouble(1);
-                      });
-                    },
-                    label: 'Opacity',
-                  ),
-                  CustomButton(
-                    onTap: () {
-                      setState(() {
-                        _opacity = 1;
-                        _width = 120.0;
-                        _height = 140.0;
-                        _opacity = 1.0;
-                        _angle = 0.0;
-                        _margin = 0.0;
-                      });
-                    },
-                    label: 'Reset',
-                  ),
-                ],
-              ),
-            )
+              child: _btns(),
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Wrap _btns() {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      // crossAxisAlignment: WrapCrossAlignment.center,
+      alignment: WrapAlignment.center,
+      children: [
+        CustomButton(
+          onTap: () {
+            setState(() {
+              _color = _randomColor();
+            });
+          },
+          label: 'Color',
+        ),
+        CustomButton(
+          onTap: () {
+            setState(() {
+              _borderRadius = MathUtil.randomDouble();
+            });
+          },
+          label: 'Border',
+        ),
+        CustomButton(
+          onTap: () {
+            setState(() {
+              _margin = MathUtil.randomDouble();
+            });
+          },
+          label: 'Margin',
+        ),
+        CustomButton(
+          onTap: () {
+            setState(() {
+              _width = MathUtil.randomDouble(200);
+              _height = MathUtil.randomDouble(300);
+            });
+          },
+          label: 'Size',
+        ),
+        CustomButton(
+          onTap: () {
+            setState(() {
+              _angle = MathUtil.randomDouble(360).toRadians;
+            });
+          },
+          label: ' Rotate',
+        ),
+        CustomButton(
+          onTap: () {
+            setState(() {
+              _opacity = MathUtil.randomDouble(1);
+            });
+          },
+          label: 'Opacity',
+        ),
+        CustomButton(
+          onTap: () {
+            setState(() {
+              _opacity = 1;
+              _width = 120.0;
+              _height = 140.0;
+              _opacity = 1.0;
+              _angle = 0.0;
+              _margin = 0.0;
+            });
+          },
+          label: 'Reset',
+        ),
+        CustomButton(
+          onTap: _incr,
+          label: 'Incr',
+        ),
+      ],
     );
   }
 
@@ -204,5 +237,11 @@ class _ImplicitAnimationsExampleState extends State<ImplicitAnimationsExample> {
               spreadRadius: 0.5,
             ),
           ];
+  }
+
+  void _incr() {
+    setState(() {
+      _counter++;
+    });
   }
 }
