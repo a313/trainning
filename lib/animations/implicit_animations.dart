@@ -41,7 +41,7 @@ class _ImplicitAnimationsExampleState extends State<ImplicitAnimationsExample> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
-      title: 'implicit Animations',
+      title: 'Implicit Animations',
       body: SizedBox(
         width: double.infinity,
         child: ListView(
