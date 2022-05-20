@@ -4,13 +4,12 @@ import 'package:trainning/animations/hero_animation.dart';
 import 'package:trainning/animations/implicit_animations.dart';
 import 'package:trainning/animations/lottie_example.dart';
 import 'package:trainning/animations/rive_example.dart';
+import 'package:trainning/animations/slide_to_act_page.dart';
 import 'package:trainning/animations/transform.dart';
 import 'package:trainning/animations/animation_controller.dart';
 import 'package:trainning/animations/transition_example.dart';
 import 'package:trainning/utils/base_scaffold.dart';
 import 'package:trainning/utils/extentsions.dart';
-
-import 'timer_animations.dart';
 
 class AnimationsPage extends StatelessWidget {
   const AnimationsPage({Key? key}) : super(key: key);
@@ -79,6 +78,13 @@ class AnimationsPage extends StatelessWidget {
             ListTile(
               onTap: () => context.push(const RiveExample()),
               title: const Text('Rive'),
+              subtitle: const Text(
+                  "Tạo animation từ package Rive. Hiển thị các animation được tạo bằng Rive"),
+            ),
+            const Divider(),
+            ListTile(
+              onTap: () => context.push(const SlideToActPage()),
+              title: const Text('Slide To Act'),
               subtitle: const Text(
                   "Tạo animation từ package Rive. Hiển thị các animation được tạo bằng Rive"),
             ),
