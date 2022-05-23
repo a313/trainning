@@ -161,7 +161,7 @@ class SlideActionState extends State<SlideAction>
                     clipBehavior: Clip.none,
                     children: <Widget>[
                       Opacity(
-                        opacity: 1 - 1 * _progress,
+                        opacity: (1 - 3 * _progress).clamp(0, 1),
                         child: Transform(
                           alignment: Alignment.center,
                           transform:
@@ -367,7 +367,6 @@ class SlideActionState extends State<SlideAction>
   void dispose() {
     _cancelAnimationController.dispose();
     _checkAnimationController.dispose();
-
     _resizeAnimationController.dispose();
     super.dispose();
   }

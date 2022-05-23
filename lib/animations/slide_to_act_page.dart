@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'slide_to_act.dart';
 
@@ -68,12 +69,17 @@ class SlideToActPage extends StatelessWidget {
                         () => _key.currentState?.reset(),
                       );
                     },
+                    innerColor: Colors.green,
+                    outerColor: Colors.white,
                     sliderRotate: false,
+                    acceptSummit: 0.95,
                     alignment: Alignment.centerRight,
-                    child: const Text(
-                      'Unlock',
-                      style: TextStyle(
-                        color: Colors.white,
+                    child: Shimmer.fromColors(
+                      baseColor: const Color(0xFF858585),
+                      highlightColor: Colors.white,
+                      child: const Text(
+                        'Trượt để mở khóa',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
                       ),
                     ),
                     sliderButtonIcon: const Icon(Icons.lock),
